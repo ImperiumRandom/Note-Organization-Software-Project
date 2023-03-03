@@ -15,7 +15,7 @@
 
 // Phuedo Code
 
-// ToDO:: 1. debug program from main menu to end
+// ToDO:: 1. add enumerations, finish add function calls to switch statment, implment changes to referenced enum within each function to effect calls
        // 2. create file saving system then create file creation function/system - program is then finished
 
 //std::cout << "worked";
