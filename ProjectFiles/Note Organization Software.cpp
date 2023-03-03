@@ -26,6 +26,10 @@
 
 // symbol for name (-N-) symbol for key (-K-) symbol for value (-V-) symbol for adding finished object from read (-F-) use comma for parsing name and number order will be (name then number (,) )
 
+// global enum for selections
+
+enum functionCall { viewAndChooseSubCatagory, exitProgram };
+
 // return uppercase version of string
 
 std::string stringUpper(std::string &stringToConvert) {
@@ -503,7 +507,7 @@ void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, 
 
 // edit note
 
-void editNote(std::vector<SubCatagory>&subCatagoryStorage, int& userInput, int currentSubCatagoryIndex, std::string keyNameForNote) {
+void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex, std::string keyNameForNote) {
 
 	std::string userSInput;
 
@@ -629,7 +633,7 @@ void editNote(std::vector<SubCatagory>&subCatagoryStorage, int& userInput, int c
 
 // create note
 
-void createNote(std::vector<SubCatagory>& subCatagoryStorage, int& userInput, int currentSubCatagoryIndex) {
+void createNote(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int currentSubCatagoryIndex) {
 
 	while (true) {
 
@@ -723,7 +727,7 @@ void createNote(std::vector<SubCatagory>& subCatagoryStorage, int& userInput, in
 
 // view note
 
-void viewNote(std::vector<std::string>Note) {
+void viewNote(functionCall& choice, std::vector<std::string>Note) {
 
 	std::string currentPlace;
 
@@ -755,7 +759,7 @@ void viewNote(std::vector<std::string>Note) {
 
 // edit notes and sub catagories
 
-void editOrViewOrCreateNotes(std::vector<SubCatagory>&subCatagoryStorage, int &userInput, int currentSubCatagoryIndex){
+void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex){
 
 	// string for input
 
@@ -999,7 +1003,7 @@ void editOrViewOrCreateNotes(std::vector<SubCatagory>&subCatagoryStorage, int &u
 
 }
 
-void createSubCatagory(std::vector<SubCatagory>& subCatagoryStorage, int& userInput) {
+void createSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 	std::string subCatagoryName;
 
@@ -1084,7 +1088,7 @@ void createSubCatagory(std::vector<SubCatagory>& subCatagoryStorage, int& userIn
 
 }
 
-void chooseOrCreateSubCatagory(std::vector<SubCatagory>& subCatagoryStorage, int &userInput) {
+void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 	std::string userSInput;
 
@@ -1199,14 +1203,9 @@ void chooseOrCreateSubCatagory(std::vector<SubCatagory>& subCatagoryStorage, int
 
 // main menu
 
-void menu(int &userInput, std::vector<SubCatagory>& subCatagoryStorage) {
+void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
-	if (userInput == 4) {
-
-		chooseOrCreateSubCatagory(subCatagoryStorage, userInput);
-
-	}
-
+	int userInput;
 
 	while (true) {
 
@@ -1251,6 +1250,18 @@ void menu(int &userInput, std::vector<SubCatagory>& subCatagoryStorage) {
 		}
 
 
+
+	}
+
+	if (userInput == 1) {
+
+		choice == "viewAndChooseSubCatagory";
+
+	}
+
+	else if (userInput == 2) {
+
+		choice == "exitProgram";
 
 	}
 
@@ -1305,35 +1316,48 @@ int main()
 
 	// variable for selection input
 
-	int userInput = 0;
+	enum functionCall {mainMenu, viewAndChooseSubCatagory, exitProgram};
+
+	functionCall choice = mainMenu;
 
 	// main Program ----------------------------------------------------------------
 	
 	while (true) {
 
-		// main menu
-
-		menu(userInput, subCatagoryStorage);
-
 		// create or edit sub catagory
 		
-		if (userInput == 1) {
+		switch (choice) {
 
-			chooseOrCreateSubCatagory(subCatagoryStorage, userInput);
+		case mainMenu: {
+
+			menu(choice, subCatagoryStorage);
+
+			break;
 
 		}
 
-		// exit program
+		case viewAndChooseSubCatagory : {
 
-		else if (userInput == 2) {
+			chooseOrCreateSubCatagory(choice, subCatagoryStorage);
+
+			break;
+
+		}
+
+
+		case exitProgram : {
 
 			return 0;
+
+			break;
+
+		}
+
+
 
 		}
 
 	}
-	
-
 
 }
 
