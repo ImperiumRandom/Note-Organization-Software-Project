@@ -15,7 +15,7 @@
 
 // Phuedo Code
 
-// ToDO:: 1. add enumerations, finish add function calls to switch statment, implment changes to referenced enum within each function to effect calls
+// ToDO:: 1. add enumerations, finish add function calls to switch statment, implment changes to referenced enum within each function to effect calls (last left of at the start of edit view or create notes)
        // 2. create file saving system then create file creation function/system - program is then finished
 
 //std::cout << "worked";
@@ -28,7 +28,7 @@
 
 // global enum for selections
 
-enum functionCall { viewAndChooseSubCatagory, exitProgram };
+enum functionCall { ViewAndChooseSubCatagory, ExitProgram, MainMenu, CreateSubcatagory, EditOrViewOrCreateNote, ViewNote, CreateNote, EditNote};
 
 // return uppercase version of string
 
@@ -507,7 +507,7 @@ void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, 
 
 // edit note
 
-void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex, std::string keyNameForNote) {
+void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex, std::string &keyNameForNote) {
 
 	std::string userSInput;
 
@@ -759,7 +759,7 @@ void viewNote(functionCall& choice, std::vector<std::string>Note) {
 
 // edit notes and sub catagories
 
-void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex){
+void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex, std::string &keyNameForNote){
 
 	// string for input
 
@@ -772,11 +772,6 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 	std::string keyNameForNote;
 
 	while (true) {
-
-		if (userInput == 0) {
-
-			return;
-		}
 
 		while (true) {
 
@@ -1003,92 +998,31 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 }
 
-void createSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage) {
+void createSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int currentSubCatagoryIndex) {
 
 	std::string subCatagoryName;
 
-	int subCatagoryIndex;
+	system("cls");
 
-	while (true) {
+	std::cout << ":: Please Enter the Name of Your New Sub Catagory ::";
 
-		while (true) {
+	TwoNewLines();
 
-			system("cls");
+	std::cout << "User Input: ";
 
-			std::cout << ":: Please Enter the Name of Your New Sub Catagory ::";
+	std::getline(std::cin, subCatagoryName);
 
-			TwoNewLines();
+	subCatagoryStorage.push_back(*new SubCatagory(subCatagoryName));
 
-			std::cout << "User Input: ";
+	currentSubCatagoryIndex = subCatagoryStorage.size() - 1;
 
-			std::getline(std::cin, subCatagoryName);
+	choice = EditOrViewOrCreateNote;	
 
-			subCatagoryStorage.push_back(*new SubCatagory(subCatagoryName));
-
-			subCatagoryIndex = subCatagoryStorage.size() - 1;
-
-			editOrViewOrCreateNotes(subCatagoryStorage, userInput, subCatagoryIndex);
-
-			if (userInput == 3 || userInput == 0 || userInput == 4) {
-
-				return;
-
-			}
-
-			else {
-
-				while (true) {
-
-					system("cls");
-
-					std::cout << "Enter (1) to create a new SubCatagory, Enter (2) to go back";
-
-					TwoNewLines();
-
-					std::cout << "User Input: ";
-
-					if (selectAndValidateInt(userInput, 1, 2)) {
-
-						break;
-
-					}
-
-					else {
-
-						std::cout << "Invalid Input, press any key to try again.";
-
-						TwoNewLines();
-
-						system("pause");
-
-					}
-
-
-				}
-
-
-				if (userInput == 2) {
-
-					return;
-
-				}
-
-				else if (userInput == 1) {
-
-					continue;
-
-				}
-
-
-			}
-
-		}
-
-	}
+	return;
 
 }
 
-void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage) {
+void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &subCatagoryIndex) {
 
 	std::string userSInput;
 
@@ -1098,6 +1032,8 @@ void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& s
 		
 		while (true) {
 
+			// will raise selection limit
+
 			if (subCatagoryStorage.size() > 0) {
 
 				minimumSubCatagorySpace = 1;
@@ -1106,11 +1042,15 @@ void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& s
 
 			system("cls");
 
+			// prompt if no subcatagory exists
+
 			if (subCatagoryStorage.size() == 0) {
 
 				std::cout << ":: Type (NEW) to Create a New Sub Catagory, or Type (EXIT) to Exit to Main Menu. ::";
 
 			}
+
+			// prompt if subcatagories exist
 
 			else {
 
@@ -1172,11 +1112,15 @@ void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& s
 
 		if (stringUpper(userSInput) == "NEW") {
 
-			createSubCatagory(subCatagoryStorage, userInput);
+			choice = CreateSubcatagory;
+			
+			return;
 
 		}
 
 		else if (stringUpper(userSInput) == "EXIT") {
+
+			choice = MainMenu;
 
 			return;
 
@@ -1184,18 +1128,11 @@ void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& s
 
 		else {
 
-			int subCatagoryIndex = std::stoi(userSInput) - 1;
-			editOrViewOrCreateNotes(subCatagoryStorage, userInput, subCatagoryIndex);
+			subCatagoryIndex = std::stoi(userSInput) - 1;
+			
+			choice = EditOrViewOrCreateNote;
 
 		}
-
-
-		if (userInput == 0) {
-
-			return;
-
-		}
-
 
 	}
 
@@ -1249,19 +1186,21 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 	
 		}
 
-
-
 	}
+
+	// assigns viewAndChooseSubCatagory
 
 	if (userInput == 1) {
 
-		choice == "viewAndChooseSubCatagory";
+		choice = ViewAndChooseSubCatagory;
 
 	}
 
+	// assigns exit Program
+
 	else if (userInput == 2) {
 
-		choice == "exitProgram";
+		choice = ExitProgram;
 
 	}
 
@@ -1293,6 +1232,12 @@ int main()
 
 	std::vector<SubCatagory>subCatagoryStorage;
 
+	// variable for current sub catagory index
+
+	int currentSubCatagoryIndex;
+
+	std::string keyNameForNote;
+
 	// add test note
 	/*
 	
@@ -1316,9 +1261,7 @@ int main()
 
 	// variable for selection input
 
-	enum functionCall {mainMenu, viewAndChooseSubCatagory, exitProgram};
-
-	functionCall choice = mainMenu;
+	functionCall choice = MainMenu;
 
 	// main Program ----------------------------------------------------------------
 	
@@ -1328,7 +1271,7 @@ int main()
 		
 		switch (choice) {
 
-		case mainMenu: {
+		case MainMenu: {
 
 			menu(choice, subCatagoryStorage);
 
@@ -1336,16 +1279,46 @@ int main()
 
 		}
 
-		case viewAndChooseSubCatagory : {
+		case ViewAndChooseSubCatagory : {
 
-			chooseOrCreateSubCatagory(choice, subCatagoryStorage);
+			chooseOrCreateSubCatagory(choice, subCatagoryStorage, currentSubCatagoryIndex);
 
 			break;
 
 		}
 
+		case CreateSubcatagory: {
 
-		case exitProgram : {
+			createSubCatagory(choice, subCatagoryStorage, currentSubCatagoryIndex);
+
+		}
+
+		case EditOrViewOrCreateNote: {
+
+			editOrViewOrCreateNotes(choice, subCatagoryStorage, currentSubCatagoryIndex);
+
+		}
+
+		case ViewNote: {
+
+			viewNote(choice, ) // another variable for note selection
+
+		}
+
+		case CreateNote: {
+
+			createNote(choice, subCatagoryStorage, currentSubCatagoryIndex);
+
+		}
+
+		case EditNote: {
+
+			editNote(choice, subCatagoryStorage, currentSubCatagoryIndex, keyNameForNote);
+
+		}
+
+
+		case ExitProgram : {
 
 			return 0;
 
