@@ -15,7 +15,7 @@
 
 // Phuedo Code
 
-// ToDO:: 1. add enumerations, finish add function calls to switch statment, implment changes to referenced enum within each function to effect calls (last left of at the start of edit view or create notes)
+// ToDO:: 1. figure out why insert characters into vector isn't working, then do a final cleanup before merge then file implementation
        // 2. create file saving system then create file creation function/system - program is then finished
 
 //std::cout << "worked";
@@ -210,45 +210,28 @@ void InsertCharactersIntoVector(std::string newString, std::vector<std::string>&
 	std::vector<std::string>transition;
 	
 	for (int i = 0; i < note.size(); i++) {
-
 		
-		if (i <= placeForInsertion) {
+		if (i == placeForInsertion) {
 
-			continue;
+			for (int i = 0; i < newElements.size(); i++) {
+
+				transition.push_back(newElements[i]);
+
+			}
 
 		}
 
-		else if (i > placeForInsertion) {
+		else {
 
 			transition.push_back(note[i]);
 
 		}
 
-
 	}
 
-	note.erase(std::next(note.begin(), placeForInsertion - 1), std::next(note.begin(), note.size() - 1));
-	
-
-	// places new elements
-
-	for (int i = 0; i < newElements.size(); i++) {
-
-		note.push_back(newElements[i]);
-
-	}
-
-
-	// replaces old elements
-
-	for (int i = 0; i < transition.size(); i++) {
-
-		note.push_back(transition[i]);
-
-	}
+	note = transition;
 
 	return;
-
 
 }
 
@@ -493,7 +476,7 @@ void displaySubCatagoryNames(std::vector<SubCatagory>&subCatagoryStorage) {
 
 }
 
-void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, int subCatagoryIndex) {
+void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, int &subCatagoryIndex) {
 
 	for (int i = 0; i < subCatagoryStorage[subCatagoryIndex].Names.size(); i++) {
 
@@ -507,16 +490,22 @@ void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, 
 
 // edit note
 
-void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex, std::string &keyNameForNote) {
+void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int &currentSubCatagoryIndex, std::string &keyNameForNote) {
+
+	// user string input	
 
 	std::string userSInput;
+
+	// user int input
+
+	int userInput;
 
 	// user selects whether they would like to edit entire line or edit 1 line in particular
 	while (true) {
 
 		system("cls");
 
-		std::cout << "Enter (1) to retype entire note, Enter (2) to select a line and retype it in, Enter (3) to exit back to note selection";
+		std::cout << ":: Enter (1) to retype entire note, Enter (2) to select a line and retype it in, Enter (3) to exit back to note selection ::";
 
 		TwoNewLines();
 
@@ -543,15 +532,25 @@ void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage,
 
 		system("cls");
 
-		"please enter note:";
+		std::cout << ":: Please enter note: ::";
 
 		TwoNewLines();
+
+		std::cout << "User Input: ";
 
 		std::getline(std::cin,userSInput);
 
 		extractCertainAmountOfCharactersIntoVector(userSInput, subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote]);
 
-		std::cout << "New line has been entered";
+		TwoNewLines();
+
+		std::cout << ":: New Note has been Entered, Please press any key to continue. ::";
+
+		TwoNewLines();
+
+		system("pause");
+
+		choice = EditOrViewOrCreateNote;
 
 		return;
 
@@ -564,51 +563,52 @@ void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage,
 		
 		while (true) {
 
-			while (true) {
-
-				for (int i = 0; i < subCatagoryStorage[currentSubCatagoryIndex].Notes.size(); i++) {
-
-					std::cout << "(" << i + 1 << ")  " << subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote][i];
-
-					NewLine();
-
-				}
-
-				TwoNewLines();
-
-				std::cout << "Please select a line to edit";
-
-				if (selectAndValidateInt(userInput, 1, subCatagoryStorage[currentSubCatagoryIndex].Notes.size())) {
-
-					lineToEdit = userInput - 1;
-
-					break;
-
-				}
-
-			}
 
 			system("cls");
 
-			std::cout << "Previous Line: (" << subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote][lineToEdit] << ")\n\n";
+			for (int i = 0; i < subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote].size(); i++) {
 
-			"please enter Changes to line:";
+				std::cout << "(" << i + 1 << ")  " << subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote][i];
+
+				TwoNewLines();
+
+			}
+
+			std::cout << "Please select a line to edit";
 
 			TwoNewLines();
 
-			std::getline(std::cin, userSInput);
+			std::cout << "User Input: ";	
 
-			extractCertainAmountOfCharactersIntoVector(userSInput, subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote]);
+			if (selectAndValidateInt(userInput, 1, subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote].size())) {	
 
-			subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote][lineToEdit] = userSInput;
+			    lineToEdit = userInput - 1;		
+
+				break;		
+
+			}
+
+			else {
+
+				std::cout << "Invalid Input, press any key to try again.";
+
+				TwoNewLines();
+
+				system("pause");
+
+			}
 
 		}
 
+
+
 		system("cls");
 
-		"please enter line:";
+		std::cout << ":: Please enter line. ::";
 
 		TwoNewLines();
+
+		std::cout << "User Input: ";
 
 		std::getline(std::cin, userSInput);
 
@@ -616,14 +616,13 @@ void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage,
 
 		TwoNewLines();
 
+		system("cls");
+
 		std::cout << "New line has been entered";
 
-		return;
+		system("pause");
 
-	}
-
-	// returns back to note selection
-	else if (userInput == 3) {
+		choice = EditOrViewOrCreateNote;
 
 		return;
 
@@ -633,7 +632,9 @@ void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage,
 
 // create note
 
-void createNote(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int currentSubCatagoryIndex) {
+void createNote(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &currentSubCatagoryIndex) {
+
+	int userInput;
 
 	while (true) {
 
@@ -705,23 +706,22 @@ void createNote(functionCall& choice, std::vector<SubCatagory>& subCatagoryStora
 
 			extractCertainAmountOfCharactersIntoVector(userSInput, subCatagoryStorage[currentSubCatagoryIndex].Notes[KeyForNote]);
 
+			choice = EditOrViewOrCreateNote;
+
 			return;
 
 		}
 
 		else if (userInput == 2) {
 
+			choice = EditOrViewOrCreateNote;
+
 			return;
 
 		}
 
 
-
 	}
-
-
-
-
 
 }
 
@@ -759,17 +759,19 @@ void viewNote(functionCall& choice, std::vector<std::string>Note) {
 
 // edit notes and sub catagories
 
-void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int currentSubCatagoryIndex, std::string &keyNameForNote){
+void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int &currentSubCatagoryIndex, std::string &keyNameForNote){
 
 	// string for input
 
 	std::string userSInput;
 
+	// int for input
+
+	int userInput;
+
 	// int for note index
 
 	int noteKey;
-
-	std::string keyNameForNote;
 
 	while (true) {
 
@@ -835,7 +837,9 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 			// create notes 
 
-			createNote(subCatagoryStorage, userInput, currentSubCatagoryIndex);
+			choice = CreateNote;
+
+			return;
 
 		}
 
@@ -847,7 +851,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 				system("cls");
 
-				std::cout << "Please select a note to edit, or enter (EXIT) to go back";
+				std::cout << ":: Please select a note to edit, or enter (EXIT) to go back ::";
 
 				TwoNewLines();
 
@@ -867,6 +871,8 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 			if (stringUpper(userSInput) == "EXIT") {
 
+				choice = EditOrViewOrCreateNote;
+
 				return;
 
 			}
@@ -877,7 +883,9 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 				keyNameForNote = subCatagoryStorage[currentSubCatagoryIndex].Names[noteKey];
 
-				editNote(subCatagoryStorage, userInput, currentSubCatagoryIndex, keyNameForNote);
+				choice = EditNote;
+
+				return;
 
 			}
 
@@ -897,8 +905,6 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 				TwoNewLines();
 
 				displayNoteNamesInSubCatagory(subCatagoryStorage, currentSubCatagoryIndex);
-
-				TwoNewLines();
 
 				std::cout << "User Input: ";
 
@@ -933,8 +939,20 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 				std::cout << ":: Note Name: " << noteKey << " ::";
 
 				TwoNewLines();
+
+				NewLine();
+
+				std::cout << "------------------------------";
 				
-				viewNote(subCatagoryStorage[currentSubCatagoryIndex].Notes[noteKey]);
+				TwoNewLines();
+				
+				viewNote(choice, subCatagoryStorage[currentSubCatagoryIndex].Notes[noteKey]);
+
+				TwoNewLines();
+				
+				std::cout << "------------------------------";
+
+				TwoNewLines();
 
 				TwoNewLines();
 
@@ -954,20 +972,31 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 				}
 
-				if (userInput == 1) {
+				else {
 
-					continue;
+					std::cout << "Invalid Input, press any key to try again.";
 
-				}
+					TwoNewLines();
 
-				else if (userInput == 0) {
-
-					userInput = 0;
-
-					return;
-
+					system("pause");
 
 				}
+
+			}
+
+			if (userInput == 1) {
+
+				choice = EditOrViewOrCreateNote;
+
+				return;
+
+			}
+
+			else if (userInput == 0) {
+
+				choice = MainMenu;
+
+				return;
 
 			}
 
@@ -977,7 +1006,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 		else if (userInput == 4) {
 
-			userInput = 4;
+			choice = ViewAndChooseSubCatagory;
 			
 			return;
 
@@ -987,7 +1016,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 		else if (userInput == 0) {
 
-			userInput = 0;
+			choice = MainMenu;
 			
 			return;
 					
@@ -998,7 +1027,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 }
 
-void createSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int currentSubCatagoryIndex) {
+void createSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &currentSubCatagoryIndex) {
 
 	std::string subCatagoryName;
 
@@ -1132,6 +1161,8 @@ void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& s
 			
 			choice = EditOrViewOrCreateNote;
 
+			return;
+
 		}
 
 	}
@@ -1239,7 +1270,7 @@ int main()
 	std::string keyNameForNote;
 
 	// add test note
-	/*
+	
 	
 	subCatagoryStorage.push_back(*new SubCatagory);
 
@@ -1249,7 +1280,7 @@ int main()
 
 	subCatagoryStorage[0].Notes["Test Name"].push_back("hi there im a test note");
 
-	*/
+	
 
 	// -----------------------------------------------------------------------------
 
@@ -1291,17 +1322,15 @@ int main()
 
 			createSubCatagory(choice, subCatagoryStorage, currentSubCatagoryIndex);
 
+			break;
+
 		}
 
 		case EditOrViewOrCreateNote: {
 
-			editOrViewOrCreateNotes(choice, subCatagoryStorage, currentSubCatagoryIndex);
+			editOrViewOrCreateNotes(choice, subCatagoryStorage, currentSubCatagoryIndex, keyNameForNote);
 
-		}
-
-		case ViewNote: {
-
-			viewNote(choice, ) // another variable for note selection
+			break;
 
 		}
 
@@ -1309,11 +1338,15 @@ int main()
 
 			createNote(choice, subCatagoryStorage, currentSubCatagoryIndex);
 
+			break;
+
 		}
 
 		case EditNote: {
 
 			editNote(choice, subCatagoryStorage, currentSubCatagoryIndex, keyNameForNote);
+
+			break;
 
 		}
 
