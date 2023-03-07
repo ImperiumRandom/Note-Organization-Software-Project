@@ -15,16 +15,27 @@
 
 // Phuedo Code
 
-// ToDO:: 1. figure out why insert characters into vector isn't working, then do a final cleanup before merge then file implementation
+// ToDO:: 1. create file save system, left off creating write functionality
        // 2. create file saving system then create file creation function/system - program is then finished
 
-//std::cout << "worked";
-
-//system("pause");
+// note for testing areas
+		//std::cout << "worked";
+		//system("pause");
 
 // code setup: 
 
-// symbol for name (-N-) symbol for key (-K-) symbol for value (-V-) symbol for adding finished object from read (-F-) use comma for parsing name and number order will be (name then number (,) )
+// store name (-N-) go to next line to get information
+
+
+// repeat note storage until all notes have been stored
+
+// store new note (-K-) go to next line to get name then number - order (name then number (,) )
+
+// store what note says (-S-) go to next line to store elements into note vector
+
+
+// finished with subcatagory (-V-) next line will either be blank or have a new symbol for a new subcatagory
+
 
 
 
@@ -286,181 +297,82 @@ void NewLines(int ammountOfNewLines) {
 
 // read and write to files for storage / reload saved data
 
-/*
-
 #pragma warning (push)
 #pragma warning (disable : 4703)
+
 void readAndWriteFileWithNotes(std::string fileName, std::vector<SubCatagory> &subCatagories, bool read) {
 
 	const char charSeperatorSymbol = ',';
 
-	// reads file
-	
-	if (read == true) {
+	const std::string storeName = "-N-\n";
 
-		// pointer object for vector
+	const std::string storeNote = "-K-\n";
 
-		SubCatagory* currentObject;
+	const std::string storeNoteInfo = "-S-\n";
 
-		// variables
+	const std::string addSubcatagoryToVector = "-V-\n";
 
-		int nameNumber;
+	// read
 
-		std::string catagoryName;
+	if (read) {
 
-		bool readingValue = false;
-
-		bool readingName = false;
-
-		bool readingKey = false;
-
-		std::string currentKey;	
-		
-		// Opens File
-
-		std::fstream myFile(fileName, std::ios::in);
-
-		// String for storeing text from file
-
-		std::string line;
-
-		// while loop for reading file
-
-		bool doOnce = true;
-
-		while (std::getline(myFile, line)) {
-
-			if (doOnce == true) {
-				
-				line = "-N-";
-
-				doOnce = false;
-
-			}
-			
-			if (line == "-N-") {
-
-				readingName = true;
-				readingKey = false;
-				readingValue = false;
-				continue;
-				
-			}
-
-			else if (line == "-K-") {
-
-				readingKey = true;
-				readingName = false;
-				readingValue = false;
-				continue;
-
-			}
-
-			else if (line == "-V-") {
-
-				readingValue = true;
-				readingKey = false;
-				readingName = false;
-				continue;
-
-			}
-
-
-			if (readingName) {
-
-				currentObject = new SubCatagory();
-				currentObject->setCatagoryName(line);
-
-			}
-
-
-			else if (line == "-F-") {
-
-				subCatagories.push_back(*currentObject);
-
-			}
-
-			else if (readingKey) {
-
-				// parse string and get key and nameNumber
-				parseStringForKeyValuePairs(line, charSeperatorSymbol, nameNumber, catagoryName);
-				currentObject->Names[nameNumber] = catagoryName;
-				currentKey = catagoryName;
-
-
-			}
-
-			else if (readingValue) {
-
-				currentObject->Notes[currentKey].append(line);
-
-			}
-
-
-
-		}
+		std::cout << "Work in progress";
 
 
 
 	}
 
-	// writes file
+	// write
 
-	else if (read == false) {
+	else {
 
-		const std::string nameSymbol = "-N-";
+		std::ofstream myFile(fileName, std::ios::app);
 
-		const std::string keySymobl = "-K-";
+		if (myFile.is_open()) {
 
-		const std::string valueSymbol = "-V-";
+			// range based loop for storing info 
 
-		const std::string finishSymbol = "-F-";
+			for (SubCatagory tempSubCatagory : subCatagories) {
 
-		// opens file for writing
+				// stores name
 
-		std::fstream myFile(fileName, std::ios::out);
+				myFile << storeName;
 
-		for (int i = 0; i < subCatagories.size(); i++) {
+				myFile << tempSubCatagory.getCatagoryName() << "\n";
 
-			// marker for name
+				// iterates through notes and stores note info
+				
+				for (int i = 0; i < tempSubCatagory.Names.size(); i++) {
+				
+					std::string currentNoteKey = tempSubCatagory.Names[i + 1];
 
-			myFile << nameSymbol << NewLine();
+					myFile << storeNote;
 
-			// stores name
+					myFile << currentNoteKey << charSeperatorSymbol << i + 1 << "\n";
 
-			myFile << subCatagories[i].getCatagoryName() << NewLine();
-			
-			// iterate through notes (map container) and store them within file
+					myFile << storeNoteInfo;
 
-			for (i = 0; i < subCatagories[i].Names.size(); i++) {
+					for (std::string tempNote : tempSubCatagory.Notes[currentNoteKey]) {
 
-				myFile << keySymobl << NewLine();
+						myFile << tempNote << "\n";
 
-				std::string tempKey = subCatagories[i].Names[i + 1];
+					}
 
-				myFile << tempKey << charSeperatorSymbol << i + 1 << NewLine();
+				}
 
-				myFile << valueSymbol << NewLine();
+				// finishes off subcatagory and prepares file for next one
 
-				myFile << subCatagories[i].Notes[tempKey] << NewLine();
+				myFile << addSubcatagoryToVector;
 
 			}
-			
-			// markes finishing of current sub catagory and notes with names
-
-			myFile << finishSymbol << NewLine();
 
 		}
 
 	}
-
-	return;
 
 }
+
 #pragma warning (pop)
-
-
-*/
 
 // display notes and subcatagories
 
@@ -1260,7 +1172,7 @@ int main()
 
 	// create and closes file
 
-	std::fstream myFile("Notes.txt", std::ios::out);
+	std::fstream myFile(noteSaveFiles[0], std::ios::out);
 	
 	if (myFile.is_open()) {
 	
@@ -1352,6 +1264,8 @@ int main()
 
 
 		case ExitProgram : {
+
+			readAndWriteFileWithNotes(noteSaveFiles[0], subCatagoryStorage, false);
 
 			return 0;
 
