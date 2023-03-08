@@ -326,11 +326,13 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 	const char charSeperatorSymbol = ',';
 
-	const std::string storeName = "-N-"; // choice 1
+	const std::string storeName = "-N-"; // case 1
 
-	const std::string storeNote = "-K-"; // choice 2
+	const std::string storeNote = "-K-"; // case 2
 
-	const std::string storeNoteInfo = "-S-"; // choice 3
+	const std::string storeNoteInfo = "-S-"; // case 3
+
+	const std::string appendNewlyMadeCatagory = "-V-"; // case 4
 
 	// string for reading line
 
@@ -338,13 +340,11 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 	// choice on were to place contents
 
-	int choice;
+	int choiceForLine = 1;
 
 	// variable to keep track of current index | a bool to keep track of whether the first iteration has occured or not
 
-	int trackerForCurrentVectorIndex = 0;
-
-	bool hasFirstSubcatagoryBeenAdded = false;
+	SubCatagory *tempCatagory;
 
 	// variables to store note key value pairs
 
@@ -366,7 +366,7 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 			if (line == storeName) {
 
-				choice = 1;
+				choiceForLine = 1;
 
 				continue;
 
@@ -376,7 +376,7 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 			else if (line == storeNote) {
 
-				choice = 2;
+				choiceForLine = 2;
 
 				continue;
 
@@ -386,37 +386,31 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 			else if (line == storeNoteInfo) {
 
-				choice = 3;
+				choiceForLine = 3;
 
 				continue;
+
+			}
+
+			else if (line == appendNewlyMadeCatagory) {
+
+				choiceForLine = 4;
 
 			}
 
 			
 			
 			
-			switch (choice)
+			switch (choiceForLine)
 			{
 			
 			// store name
 
 			case 1: {
 
-				if (hasFirstSubcatagoryBeenAdded = true) {
-
-					trackerForCurrentVectorIndex++;
-
-				}
-
-				else {
-
-					hasFirstSubcatagoryBeenAdded = true;
-
-				}
+				tempCatagory = new SubCatagory;
 				
-				subCatagories.push_back(*new SubCatagory);
-				
-				subCatagories[trackerForCurrentVectorIndex].setCatagoryName(line);
+				tempCatagory->setCatagoryName(line);
 
 			}
 			
@@ -426,25 +420,33 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 				parseStringForKeyValuePairs(line, charSeperatorSymbol, key, value);
 
-				subCatagories[trackerForCurrentVectorIndex].Names[key] = value;
-
-				subCatagories[trackerForCurrentVectorIndex].Notes[value]; // again the value will turn into the key in case 3 below
+				tempCatagory->Names[key] = value; // again the value will turn into the key in case 3 below !!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			}
 
 			// store note info
 
 			case 3: {
+			
+				tempCatagory->Notes[value].push_back(line);
 
+			}
 
+			// push back subCatagories vector with new object
 
-
+			case 4: {
+				
+				subCatagories.push_back(*tempCatagory);
 
 			}
 			
 			}
 
 		}
+
+		tempCatagory = NULL;
+
+		myFile.close();
 
 	}
 
@@ -1300,13 +1302,17 @@ int main()
 
 	// create and closes file
 
-	std::fstream myFile(noteSaveFiles[0], std::ios::out);
+	// std::fstream myFile(noteSaveFiles[0], std::ios::out);
 	
+	/*
+
 	if (myFile.is_open()) {
 	
 		myFile.close();
 	
 	}
+
+	*/
 	
 	// vector of SubCatagorys
 
@@ -1320,6 +1326,7 @@ int main()
 
 	std::string keyNameForNote;
 
+	read("Notes.txt", subCatagoryStorage);
 
 	// adds a test note
 	

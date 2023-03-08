@@ -21,6 +21,9 @@
     <ClCompile Include="SubCatagory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Test Debug Solutions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SubCatagory.h">
