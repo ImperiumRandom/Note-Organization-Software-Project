@@ -257,25 +257,36 @@ void parseStringForKeyValuePairs(std::string stringToParse, char symbolToFind, i
 	
 	// parse string and set key and value
 
-	std::vector<std::string> result;
+	std::string data;
 
-	std::stringstream parseString(stringToParse);
+	key = 0;
 
-	while (parseString.good())
-	{
-		std::string tempString;
+	for (int i = 0; i < stringToParse.size(); i++) {
 
-		std::getline(parseString, tempString, symbolToFind);
+		data = stringToParse[i];
 
-		result.push_back(tempString);
+		if (std::isdigit(stoi(data))) {
+
+			key += stoi(data);
+
+		}
+
+		else if (data[0] == symbolToFind) {
+
+			continue;
+
+		}
+
+		else {
+
+			value.append(data);
+
+		}
+
 
 	}
-
-	// stores extracted key and value into referenced variables
-
-	value = result[0];
-
-	key = std::stoi(result[1]);
+	
+	return;
 
 }
 
