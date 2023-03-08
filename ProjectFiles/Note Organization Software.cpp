@@ -34,7 +34,10 @@
 // store what note says (-S-) go to next line to store elements into note vector
 
 
-// finished with subcatagory (-V-) next line will either be blank or have a new symbol for a new subcatagory
+
+// create function to add onto current file
+
+// create function to read entire file on program start
 
 
 
@@ -300,7 +303,7 @@ void NewLines(int ammountOfNewLines) {
 #pragma warning (push)
 #pragma warning (disable : 4703)
 
-void readAndWriteFileWithNotes(std::string fileName, std::vector<SubCatagory> &subCatagories, bool read) {
+void write(std::string fileName, std::vector<SubCatagory>& subCatagories) {
 
 	const char charSeperatorSymbol = ',';
 
@@ -310,20 +313,144 @@ void readAndWriteFileWithNotes(std::string fileName, std::vector<SubCatagory> &s
 
 	const std::string storeNoteInfo = "-S-\n";
 
-	const std::string addSubcatagoryToVector = "-V-\n";
-
-	// read
-
-	if (read) {
-
-		std::cout << "Work in progress";
 
 
+
+
+
+}
+
+void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
+
+	// constants for reading file
+
+	const char charSeperatorSymbol = ',';
+
+	const std::string storeName = "-N-"; // choice 1
+
+	const std::string storeNote = "-K-"; // choice 2
+
+	const std::string storeNoteInfo = "-S-"; // choice 3
+
+	// string for reading line
+
+	std::string line;
+
+	// choice on were to place contents
+
+	int choice;
+
+	// variable to keep track of current index | a bool to keep track of whether the first iteration has occured or not
+
+	int trackerForCurrentVectorIndex = 0;
+
+	bool hasFirstSubcatagoryBeenAdded = false;
+
+	// variables to store note key value pairs
+
+	int key; // this is the key for the names map, this map is within our vector of subcatagories
+
+	std::string value; // this is the value for the names map as well as the key for the notes map, this map is within our vector of subcatagories
+
+	// opens file for input into program
+
+	std::ifstream myFile(fileName);
+
+	// reads lines of file and places contents into vector of SubCatagory class
+
+	if (myFile.is_open()) {
+
+		while (std::getline(myFile, line)) {
+
+			// assigns choice to store a name
+
+			if (line == storeName) {
+
+				choice = 1;
+
+				continue;
+
+			}
+
+			// asigns choice to store a note
+
+			else if (line == storeNote) {
+
+				choice = 2;
+
+				continue;
+
+			}
+
+			// asigns choice to store note info
+
+			else if (line == storeNoteInfo) {
+
+				choice = 3;
+
+				continue;
+
+			}
+
+			
+			
+			
+			switch (choice)
+			{
+			
+			// store name
+
+			case 1: {
+
+				if (hasFirstSubcatagoryBeenAdded = true) {
+
+					trackerForCurrentVectorIndex++;
+
+				}
+
+				else {
+
+					hasFirstSubcatagoryBeenAdded = true;
+
+				}
+				
+				subCatagories.push_back(*new SubCatagory);
+				
+				subCatagories[trackerForCurrentVectorIndex].setCatagoryName(line);
+
+			}
+			
+			// store note
+			
+			case 2: {
+
+				parseStringForKeyValuePairs(line, charSeperatorSymbol, key, value);
+
+				subCatagories[trackerForCurrentVectorIndex].Names[key] = value;
+
+				subCatagories[trackerForCurrentVectorIndex].Notes[value]; // again the value will turn into the key in case 3 below
+
+			}
+
+			// store note info
+
+			case 3: {
+
+
+
+
+
+			}
+			
+			}
+
+		}
 
 	}
 
-	// write
+	// old write system below
 
+	/*
 	else {
 
 		std::ofstream myFile(fileName, std::ios::app);
@@ -367,8 +494,9 @@ void readAndWriteFileWithNotes(std::string fileName, std::vector<SubCatagory> &s
 			}
 
 		}
-
+		
 	}
+	*/
 
 }
 
@@ -1203,6 +1331,16 @@ int main()
 
 	subCatagoryStorage[0].Notes["Test Name"].push_back("hi there im a test note");
 
+	subCatagoryStorage.push_back(*new SubCatagory);
+
+	subCatagoryStorage[1].setCatagoryName("Another Test Catagory");
+
+	subCatagoryStorage[1].Names[1] = "Test Name";
+
+	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually");
+	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually 2");
+	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually 3");
+
 
 	// variable/enum for selection input - access different areas of program
 
@@ -1264,8 +1402,6 @@ int main()
 
 
 		case ExitProgram : {
-
-			readAndWriteFileWithNotes(noteSaveFiles[0], subCatagoryStorage, false);
 
 			return 0;
 
