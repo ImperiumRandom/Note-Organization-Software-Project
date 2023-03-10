@@ -257,36 +257,45 @@ void parseStringForKeyValuePairs(std::string stringToParse, char symbolToFind, i
 	
 	// parse string and set key and value
 
-	std::string data;
+	std::cout << stringToParse;
 
-	key = 0;
+	system("pause");
 
-	for (int i = 0; i < stringToParse.size(); i++) {
+	std::stringstream parse(stringToParse);
 
-		data = stringToParse[i];
+	std::vector<std::string>results;
 
-		if (std::isdigit(stoi(data))) {
+	std::string temp;
 
-			key += stoi(data);
+	while (parse.good()) {
 
-		}
+		std::getline(parse, temp, ',');
 
-		else if (data[0] == symbolToFind) {
+		results.push_back(temp);
 
-			continue;
+	}
+	
+	int counter = 0;
+
+	std::vector<std::string>::iterator it;
+
+	for (it = results.begin(); it != results.end(); it++, counter++) {
+
+		if (isdigit(results[counter][0])) {
+
+			key = stoi(results[counter]);
 
 		}
 
 		else {
 
-			value.append(data);
+			value = *it;
 
 		}
 
-
 	}
-	
-	return;
+
+	system("pause");
 
 }
 
@@ -373,6 +382,20 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 		while (std::getline(myFile, line)) {
 
+			// in case an empty line shows up it will exit with an error
+			
+			if (line == "") {
+
+				std::cout << "Error! There is an empty space in your file, please restart program and load another file, or fix the broken one.";
+
+				NewLines(2);
+
+				system("pause");
+
+				return;
+
+			}
+
 			// assigns choice to store a name
 
 			if (line == storeName) {
@@ -423,6 +446,8 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 				
 				tempCatagory->setCatagoryName(line);
 
+				break;
+
 			}
 			
 			// store note
@@ -433,6 +458,8 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 				tempCatagory->Names[key] = value; // again the value will turn into the key in case 3 below !!!!!!!!!!!!!!!!!!!!!!!!!!
 
+				break;
+
 			}
 
 			// store note info
@@ -441,6 +468,8 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 			
 				tempCatagory->Notes[value].push_back(line);
 
+				break;
+
 			}
 
 			// push back subCatagories vector with new object
@@ -448,6 +477,8 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 			case 4: {
 				
 				subCatagories.push_back(*tempCatagory);
+
+				break;
 
 			}
 			
@@ -460,6 +491,8 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 		myFile.close();
 
 	}
+
+	return;
 
 	// old write system below
 
@@ -1341,6 +1374,8 @@ int main()
 
 	// adds a test note
 	
+	/*
+
 	subCatagoryStorage.push_back(*new SubCatagory);
 
 	subCatagoryStorage[0].setCatagoryName("Test Catagory");
@@ -1358,7 +1393,8 @@ int main()
 	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually");
 	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually 2");
 	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually 3");
-
+	
+	*/
 
 	// variable/enum for selection input - access different areas of program
 
