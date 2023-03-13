@@ -3,12 +3,18 @@ This is a SubCatagory
 -K-
 1,This is a new note
 -S-
-this is the information within the note hehehehehe store this its funny
-how are you dummy hehehehe
-this is another note by the way
-now go ahead he just be quite right now 
-hi their how are you
-c++ is my favorite language
+hi their this is ano
+ther test to see if 
+this writes into my 
+file
+-K-
+2,it might work
+-S-
+None
+-K-
+3,big goerge the seventh eating a apple covered in mayonaise
+-S-
+None
 -V-
 -N-
 Hi another one

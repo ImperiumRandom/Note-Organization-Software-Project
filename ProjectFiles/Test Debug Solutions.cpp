@@ -26,7 +26,7 @@ int master() {
 
 	
 	
-
+	return 0;
 
 
 

@@ -12,6 +12,8 @@
 #include <iterator>
 
 
+// current debing 
+	//lines - in write file
 
 // Phuedo Code
 
@@ -22,6 +24,10 @@
 		//std::cout << "worked";
 		//system("pause");
 
+
+		
+		
+		
 // code setup: 
 
 // store name (-N-) go to next line to get information
@@ -553,56 +559,6 @@ void read(std::string fileName, std::vector<SubCatagory> &subCatagories) {
 
 	return;
 
-	// old write system below
-
-	/*
-	else {
-
-		std::ofstream myFile(fileName, std::ios::app);
-
-		if (myFile.is_open()) {
-
-			// range based loop for storing info 
-
-			for (SubCatagory tempSubCatagory : subCatagories) {
-
-				// stores name
-
-				myFile << storeName;
-
-				myFile << tempSubCatagory.getCatagoryName() << "\n";
-
-				// iterates through notes and stores note info
-				
-				for (int i = 0; i < tempSubCatagory.Names.size(); i++) {
-				
-					std::string currentNoteKey = tempSubCatagory.Names[i + 1];
-
-					myFile << storeNote;
-
-					myFile << currentNoteKey << charSeperatorSymbol << i + 1 << "\n";
-
-					myFile << storeNoteInfo;
-
-					for (std::string tempNote : tempSubCatagory.Notes[currentNoteKey]) {
-
-						myFile << tempNote << "\n";
-
-					}
-
-				}
-
-				// finishes off subcatagory and prepares file for next one
-
-				myFile << addSubcatagoryToVector;
-
-			}
-
-		}
-		
-	}
-	*/
-
 }
 
 #pragma warning (pop)
@@ -635,7 +591,7 @@ void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, 
 
 // edit note
 
-void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int &currentSubCatagoryIndex, std::string &keyNameForNote) {
+void editNote(std::string fileName, functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int &currentSubCatagoryIndex, std::string &keyNameForNote) {
 
 	// user string input	
 
@@ -698,6 +654,8 @@ void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage,
 		system("pause");
 
 		choice = EditOrViewOrCreateNote;
+
+		write(fileName, subCatagoryStorage);
 
 		return;
 
@@ -770,6 +728,8 @@ void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage,
 
 		choice = EditOrViewOrCreateNote;
 
+		write(fileName, subCatagoryStorage);
+
 		return;
 
 	}
@@ -778,7 +738,7 @@ void editNote(functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage,
 
 // create note
 
-void createNote(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &currentSubCatagoryIndex) {
+void createNote(std::string fileName, functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &currentSubCatagoryIndex) {
 
 	int userInput;
 
@@ -803,6 +763,8 @@ void createNote(functionCall& choice, std::vector<SubCatagory>& subCatagoryStora
 		KeyForNote = userSInput;
 
 		subCatagoryStorage[currentSubCatagoryIndex].Notes[KeyForNote].push_back("None");
+
+		write(fileName, subCatagoryStorage);
 
 		// selection
 
@@ -857,6 +819,8 @@ void createNote(functionCall& choice, std::vector<SubCatagory>& subCatagoryStora
 			extractCertainAmountOfCharactersIntoVector(userSInput, subCatagoryStorage[currentSubCatagoryIndex].Notes[KeyForNote]);
 
 			choice = EditOrViewOrCreateNote;
+
+			write(fileName, subCatagoryStorage);
 
 			return;
 
@@ -1173,7 +1137,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 }
 
-void createSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &currentSubCatagoryIndex) {
+void createSubCatagory(std::string fileName,functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &currentSubCatagoryIndex) {
 
 	std::string subCatagoryName;
 
@@ -1192,6 +1156,8 @@ void createSubCatagory(functionCall& choice, std::vector<SubCatagory>& subCatago
 	currentSubCatagoryIndex = subCatagoryStorage.size() - 1;
 
 	choice = EditOrViewOrCreateNote;	
+
+	write(fileName, subCatagoryStorage);
 
 	return;
 
@@ -1483,7 +1449,7 @@ int main()
 
 		case CreateSubcatagory: {
 
-			createSubCatagory(choice, subCatagoryStorage, currentSubCatagoryIndex);
+			createSubCatagory("Notes.txt", choice, subCatagoryStorage, currentSubCatagoryIndex);
 
 			break;
 
@@ -1499,7 +1465,7 @@ int main()
 
 		case CreateNote: {
 
-			createNote(choice, subCatagoryStorage, currentSubCatagoryIndex);
+			createNote("Notes.txt", choice, subCatagoryStorage, currentSubCatagoryIndex);
 
 			break;
 
@@ -1507,7 +1473,7 @@ int main()
 
 		case EditNote: {
 
-			editNote(choice, subCatagoryStorage, currentSubCatagoryIndex, keyNameForNote);
+			editNote("Notes.txt", choice, subCatagoryStorage, currentSubCatagoryIndex, keyNameForNote);
 
 			break;
 
