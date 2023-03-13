@@ -1,0 +1,71 @@
+[33mcommit 1f7e00355a2944a1c0ea5da463119491bdebabcd[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Thu Mar 9 19:01:49 2023 -0500
+
+    Project can now read and delimit my files, next up adding the ability to write files
+
+[33mcommit 0b79f713e33590b865c80f3ef154c8d813be725c[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Wed Mar 8 17:55:49 2023 -0500
+
+    still working on correctly parsing my string with sstream library or other class
+
+[33mcommit 2de131eabcfe3bc0643f865f72c6c34c27685c4d[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Wed Mar 8 16:57:30 2023 -0500
+
+    Program is not in a working state, need to fix parse string function for int and string value
+
+[33mcommit 897c6c7bc9929ddc17dde62f9e4da8bf34f19dbe[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Tue Mar 7 19:27:16 2023 -0500
+
+    Almost finished with read function, need to add functionality that stores the information of each note
+
+[33mcommit a6459c299e21a51a072230b5a39388f594ac13c7[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Mon Mar 6 22:20:23 2023 -0500
+
+    created write functionality needs a bit of debugging though
+
+[33mcommit 2ff69e1d6ad2af17185e30031ea9f644bfcdfe4b[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Mon Mar 6 17:10:11 2023 -0500
+
+    Program is fully functional and pretty damn clean :), next up .txt file save system
+
+[33mcommit 8ac5f6508cd07ae8d9bc5800bd01897a6c8c289b[m[33m ([m[1;32mReduceFunctionCallClutter[m[33m)[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Mon Mar 6 16:46:44 2023 -0500
+
+    Reduced clutter with a newline function containing a paremeter
+
+[33mcommit 52fbe9ad58a862dd30cdef77939ddf4964fb51cc[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Mon Mar 6 16:30:36 2023 -0500
+
+    Program is in a full working updated state, currently need to add better less cluttered new line function
+
+[33mcommit 3b9651a83ac471b428bbef37c26b661ddf890f1c[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Sat Mar 4 20:59:07 2023 -0500
+
+    reduced and cleaned more functions to while loop and choice layout, using enumerator and switch statement
+
+[33mcommit a31ca80b0910bfc7bfd6e7bbf85aa630fd0b41e1[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Thu Mar 2 19:24:05 2023 -0500
+
+    added a small amount to the ToDo list at the top
+
+[33mcommit 03bd4dc5f160ecebe856bf64c7948393dbe473c7[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Thu Mar 2 19:22:01 2023 -0500
+
+    implemented basic enumerations, still need to add more
+
+[33mcommit 436ec7188fec678f019929b18a9c55c1b435d77b[m
+Author: Salvador <SalvadorAlemany2@outlook.com>
+Date:   Thu Mar 2 18:02:26 2023 -0500
+
+    Plain Working Version of Full Program, Without file save system

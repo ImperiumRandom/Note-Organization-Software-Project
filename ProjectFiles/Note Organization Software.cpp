@@ -333,10 +333,69 @@ void write(std::string fileName, std::vector<SubCatagory>& subCatagories) {
 
 	const std::string storeNoteInfo = "-S-\n";
 
+	const std::string appendNewlyMadeCatagory = "-V-";
 
+	std::ofstream myFile(fileName);
 
+	// key for note in for loop below
 
+	std::string currentNoteKey;
 
+	// iterates through our sub catagories
+
+	std::vector<SubCatagory>::iterator currentSubcatagory;
+	for (currentSubcatagory = subCatagories.begin(); currentSubcatagory != subCatagories.end(); currentSubcatagory++) {
+
+		myFile << storeName;
+
+		// stores catagory name
+		
+		myFile << currentSubcatagory->getCatagoryName() << "\n";
+
+		// iterates through all the different notes
+		
+		for (int i = 0; i < currentSubcatagory->Names.size(); i++) {
+			
+			// assigns key for note
+
+			currentNoteKey = currentSubcatagory->Names[i + 1];
+
+			myFile << storeNote;
+
+			// adding 1 to i because the numbers in my names map start at 1
+
+			myFile << i + 1 << charSeperatorSymbol << currentNoteKey << "\n";
+
+			myFile << storeNoteInfo;
+
+			// iterates through vector to store note in file
+
+			std::vector<std::string>::iterator note;
+			for (note = currentSubcatagory->Notes[currentNoteKey].begin(); note != currentSubcatagory->Notes[currentNoteKey].end(); note++) {
+
+				myFile << *note << "\n";
+
+			}
+
+		}
+
+		myFile << appendNewlyMadeCatagory;
+
+		if (currentSubcatagory == subCatagories.end()) {
+
+			continue;
+
+		}
+
+		else {
+
+			myFile << "\n";
+
+		}
+
+	}
+
+	return;
 
 }
 
