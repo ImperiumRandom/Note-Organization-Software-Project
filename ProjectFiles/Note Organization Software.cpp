@@ -17,8 +17,8 @@
 
 // Phuedo Code
 
-// ToDO:: 1. clean up a bit
-       // 2. add system for creating custom files
+// ToDO:: 1. add file creation system
+       // 2. 
 
 // note for testing areas
 		//std::cout << "worked";
@@ -319,7 +319,7 @@ void parseStringForKeyValuePairs(std::string stringToParse, char symbolToFind, i
 
 void parseStringForKeyValuePairs(std::string stringToParse, std::string symbolToFind, std::string& key, std::string& value) {
 
-
+	// may use in the future
 
 
 }
@@ -1027,7 +1027,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 				system("cls");
 
-				std::cout << ":: Please Select which Note you Would Like to Read. ::";
+				std::cout << ":: Please Select which Note you Would Like to Read. Enter 0 to go back ::";
 
 				NewLines(2);
 
@@ -1035,7 +1035,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 				std::cout << "User Input: ";
 
-				if (selectAndValidateInt(userInput, 1, subCatagoryStorage[currentSubCatagoryIndex].Names.size())) {	
+				if (selectAndValidateInt(userInput, 0, subCatagoryStorage[currentSubCatagoryIndex].Names.size())) {	
 
 					break;
 
@@ -1053,6 +1053,14 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 
 			}
 			
+			if (userInput == 0) {
+
+				choice = EditOrViewOrCreateNote;
+
+				return;
+
+			}
+
 			while (true) {
 
 				system("cls");
