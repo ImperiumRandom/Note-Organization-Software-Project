@@ -17,8 +17,8 @@
 
 // Phuedo Code
 
-// ToDO:: 1. create file save system, left off creating write functionality
-       // 2. create file saving system then create file creation function/system - program is then finished
+// ToDO:: 1. clean up a bit
+       // 2. add system for creating custom files
 
 // note for testing areas
 		//std::cout << "worked";
@@ -265,6 +265,10 @@ void parseStringForKeyValuePairs(std::string stringToParse, char symbolToFind, i
 
 	std::cout << stringToParse;
 
+	// define bool to see if key has been already stored
+
+	bool hasKeyBeenStored = false;
+
 	system("pause");
 
 	std::stringstream parse(stringToParse);
@@ -287,9 +291,17 @@ void parseStringForKeyValuePairs(std::string stringToParse, char symbolToFind, i
 
 	for (it = results.begin(); it != results.end(); it++, counter++) {
 
-		if (isdigit(results[counter][0])) {
+		// limits storage of key once
 
-			key = stoi(results[counter]);
+		if (hasKeyBeenStored == false) {
+
+			if (isdigit(results[counter][0])) {
+
+				key = stoi(results[counter]);
+
+				hasKeyBeenStored = true;
+
+			}
 
 		}
 
