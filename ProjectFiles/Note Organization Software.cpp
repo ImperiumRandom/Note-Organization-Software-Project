@@ -15,10 +15,10 @@
 // current debing 
 	//lines - in write file
 
-// Phuedo Code
+// Phuedo Code - in our file creation the last index of the vector will always be the last loaded file
 
 // ToDO:: 1. add file creation system
-       // 2. 
+       // 2. Remove debugging statments
 
 // note for testing areas
 		//std::cout << "worked";
@@ -39,6 +39,7 @@
 
 // store what note says (-S-) go to next line to store elements into note vector
 
+// store last loaded file in file for file names (-L-)
 
 
 // create function to add onto current file
@@ -52,7 +53,7 @@
 
 // global enum for selections
 
-enum functionCall { ViewAndChooseSubCatagory, ExitProgram, MainMenu, CreateSubcatagory, EditOrViewOrCreateNote, ViewNote, CreateNote, EditNote};
+enum functionCall {ViewAndChooseSubCatagory, ExitProgram, MainMenu, CreateSubcatagory, EditOrViewOrCreateNote, ViewNote, CreateNote, EditNote, FileSelection, FileCreation};
 
 // return uppercase version of string
 
@@ -1330,10 +1331,14 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 		NewLines(2);
 
 		// Options
+
+		std::cout << "(0) Select and Load A Seperate FIle/Save";
 		
+		NewLines(1);
+
 		std::cout << "(1) View and Choose Sub Catagory";
 
-		std::cout << "\n";
+		NewLines(1);
 
 		std::cout << "(2) Exit Program";
 
@@ -1341,7 +1346,7 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 		std::cout << "User Input: ";
 
-		if (selectAndValidateInt(userInput, 1, 2)) {
+		if (selectAndValidateInt(userInput, 0, 2)) {
 
 			break;
 
@@ -1361,7 +1366,13 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 	// assigns viewAndChooseSubCatagory
 
-	if (userInput == 1) {
+	if (userInput == 0) {
+
+		choice = FileSelection;
+
+	}
+	
+	else if (userInput == 1) {
 
 		choice = ViewAndChooseSubCatagory;
 
@@ -1379,30 +1390,68 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 }
 
+// file selection
+
+void writeFiles() {
+
+	NULL;
+
+	// this will take in our vector of file names and write it into our file in our program
+
+}
+
+void readAndStoreFileContentsIntoVector(std::vector<std::string>& fileStorage) {
+
+
+
+}
+
+void fileCreation(functionCall& choice, std::vector<std::string> &fileStorage, std::string &currentFile) {
+
+	// defines variable that will hold the file name
+
+	std::string userSInput;
+
+	// user will create file for program
+	
+	std::cout << "|| Please Type in the Name of Your New File ||";
+
+	NewLines(2);
+
+	std::cout << "User Input: ";
+
+	std::getline(std::cin, userSInput);
+
+	fileStorage.push_back(userSInput);
+
+
+	
+
+}
+
+void fileSelection(functionCall &choice) {
+
+
+	std::cout << "WIP";
+
+	system("pause");
+
+	choice = MainMenu;
+
+	return;
+
+}
+
+
+
 // main program function
 
 int main()
 {
-	// text file names for notes
+	// variable/enum for selection input - access different areas of program
 
-	std::vector<std::string> noteSaveFiles;
+	functionCall choice = MainMenu;
 
-	noteSaveFiles.push_back("Notes.txt");
-
-	// create and closes file
-
-	// std::fstream myFile(noteSaveFiles[0], std::ios::out);
-	
-	/*
-
-	if (myFile.is_open()) {
-	
-		myFile.close();
-	
-	}
-
-	*/
-	
 	// vector of SubCatagorys
 
 	std::vector<SubCatagory>subCatagoryStorage;
@@ -1415,41 +1464,48 @@ int main()
 
 	std::string keyNameForNote;
 
-	read("Notes.txt", subCatagoryStorage);
-
-	// adds a test note
+	// open and read file names within txt file, then store into our note save files vectorvector
 	
-	/*
+	std::vector<std::string> noteSaveFiles;
 
-	subCatagoryStorage.push_back(*new SubCatagory);
+	std::string CurrentFile; // this will always be written as the last loaded file until the user changes there file
 
-	subCatagoryStorage[0].setCatagoryName("Test Catagory");
+	readAndStoreFileContentsIntoVector(noteSaveFiles);
 
-	subCatagoryStorage[0].Names[1] = "Test Name";
+	// read last opened file, or have user create one
 
-	subCatagoryStorage[0].Notes["Test Name"].push_back("hi there im a test note");
-
-	subCatagoryStorage.push_back(*new SubCatagory);
-
-	subCatagoryStorage[1].setCatagoryName("Another Test Catagory");
-
-	subCatagoryStorage[1].Names[1] = "Test Name";
-
-	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually");
-	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually 2");
-	subCatagoryStorage[1].Notes["Test Name"].push_back("hi there im a test note, this is a bit longer than ussually 3");
+	if (noteSaveFiles.size() == 0) {
 	
-	*/
+		fileCreation(choice);
 
-	// variable/enum for selection input - access different areas of program
+	}
 
-	functionCall choice = MainMenu;
+	read(noteSaveFiles[noteSaveFiles.size() - 1], subCatagoryStorage);
 
 	// main Program ----------------------------------------------------------------
 	
 	while (true) {
 		
 		switch (choice) {
+
+
+		case FileCreation: {
+
+			fileCreation(choice);
+
+			break;
+
+		}
+
+
+		case FileSelection: {
+
+			fileSelection(choice);
+
+			break;
+
+		}
+
 
 		case MainMenu: {
 
