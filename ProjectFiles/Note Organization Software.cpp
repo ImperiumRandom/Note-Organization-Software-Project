@@ -1392,7 +1392,7 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 // file selection
 
-void writeFiles() {
+void writeFiles(std::vector<std::string> fileStorage, std::string currentFile) {
 
 	NULL;
 
@@ -1400,7 +1400,11 @@ void writeFiles() {
 
 }
 
-void readAndStoreFileContentsIntoVector(std::vector<std::string>& fileStorage) {
+void readAndStoreFileContentsIntoVector(std::vector<std::string>& fileStorage, std::string currentFile) {
+
+	const char storeCurrentFile = '-L-';
+
+	// wip
 
 
 
@@ -1424,17 +1428,9 @@ void fileCreation(functionCall& choice, std::vector<std::string> &fileStorage, s
 
 	fileStorage.push_back(userSInput);
 
+	currentFile = userSInput;
 
-	
-
-}
-
-void fileSelection(functionCall &choice) {
-
-
-	std::cout << "WIP";
-
-	system("pause");
+	writeFiles(fileStorage, currentFile);
 
 	choice = MainMenu;
 
@@ -1443,6 +1439,55 @@ void fileSelection(functionCall &choice) {
 }
 
 
+void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, std::string& currentFile) {
+
+	// variable for recieving input then input validating input
+
+	std::string userSInput;
+
+	int userInput = 0;
+
+	// displays current number for loop
+
+	while (true) {
+
+		std::cout << "|| Please Select a File ||";
+
+		NewLines(2);
+
+		for (int i = 0; i < fileStorage.size(); i++) {
+
+			std::cout << i + 1 << ": " << fileStorage[i];
+
+			NewLines(2);
+
+		}
+
+		if (selectAndValidateInt(userInput, 1, fileStorage.size())) {
+
+			break;
+
+		}
+
+		else {
+
+			std::cout << "Invalid Input, press any key to try again.";
+
+			NewLines(2);
+
+			system("pause");
+
+		}
+
+	}
+
+	currentFile = fileStorage[userInput - 1];
+
+	writeFiles(fileStorage, currentFile);
+
+	choice = MainMenu;
+	
+}
 
 // main program function
 
@@ -1468,19 +1513,23 @@ int main()
 	
 	std::vector<std::string> noteSaveFiles;
 
-	std::string CurrentFile; // this will always be written as the last loaded file until the user changes there file
+	std::string currentFile; // this will always be written as the last loaded file until the user changes there file
 
-	readAndStoreFileContentsIntoVector(noteSaveFiles);
+	readAndStoreFileContentsIntoVector(noteSaveFiles, currentFile);
 
 	// read last opened file, or have user create one
 
 	if (noteSaveFiles.size() == 0) {
 	
-		fileCreation(choice);
+		choice = FileCreation;
 
 	}
 
-	read(noteSaveFiles[noteSaveFiles.size() - 1], subCatagoryStorage);
+	else {
+
+		read(currentFile, subCatagoryStorage);
+
+	}
 
 	// main Program ----------------------------------------------------------------
 	
@@ -1491,7 +1540,11 @@ int main()
 
 		case FileCreation: {
 
-			fileCreation(choice);
+			fileCreation(choice, noteSaveFiles, currentFile);
+
+			subCatagoryStorage.clear();
+
+			read(currentFile, subCatagoryStorage);
 
 			break;
 
@@ -1500,7 +1553,11 @@ int main()
 
 		case FileSelection: {
 
-			fileSelection(choice);
+			fileSelection(choice, noteSaveFiles, currentFile);
+
+			subCatagoryStorage.clear();
+
+			read(currentFile, subCatagoryStorage);
 
 			break;
 
