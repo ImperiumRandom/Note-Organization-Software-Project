@@ -1394,19 +1394,78 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 void writeFiles(std::vector<std::string> fileStorage, std::string currentFile) {
 
-	NULL;
+	const std::string storeCurrentFile = "-L-\n";
 
-	// this will take in our vector of file names and write it into our file in our program
+	std::ofstream myFile("FileSaveNames");
+
+	if (myFile.is_open()) {
+
+		std::vector<std::string>::iterator currentFileName;
+		for (currentFileName = fileStorage.begin(); currentFileName != fileStorage.end(); currentFileName++) {
+
+			myFile << *currentFileName << "\n";
+
+		}
+
+		myFile << storeCurrentFile;
+
+		myFile << currentFile;
+
+		myFile.close();
+
+	}
+
+	return;
 
 }
 
 void readAndStoreFileContentsIntoVector(std::vector<std::string>& fileStorage, std::string currentFile) {
 
-	const char storeCurrentFile = '-L-';
+	const std::string storeCurrentFile = "-L-";
 
-	// wip
+	std::ifstream myFile("FileSaveNames");
 
+	std::string holdFileContents;
 
+	bool isThisLineOurLastOpenedFile = false;
+
+	if (myFile.is_open()) {
+
+		while (myFile >> holdFileContents) {
+
+			// this if statement will check if we need to store last opened file
+
+			if (holdFileContents == storeCurrentFile) {
+
+				isThisLineOurLastOpenedFile = true;
+
+				continue;
+
+			}
+
+			// decides with data type to pass (holdFileContents) into
+
+			if (isThisLineOurLastOpenedFile) {
+
+				currentFile = holdFileContents;
+
+				break;
+
+			}
+
+			else {
+
+				fileStorage.push_back(holdFileContents);
+
+			}
+
+		}
+
+		myFile.close();
+
+	}
+
+	return;
 
 }
 
