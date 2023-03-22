@@ -1,5 +1,7 @@
-Notes.txt
-Test.txt
-AnotherTest.txt
+SalvadorsNewFile.txt
+Hi there this is a new file lol.txt
+Hi their another file lol.txt
+This is another file for storing notes hehehe..txt
+unce.txt
 -L-
-Notes.txt
+unce.txt

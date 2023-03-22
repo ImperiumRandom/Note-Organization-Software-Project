@@ -1,8 +1,9 @@
 ﻿  Note Organization Software.cpp
-D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(701,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(761,85): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(989,8): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(1038,8): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(1176,57): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(1234,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(702,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(762,85): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(990,8): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(1039,8): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(1177,57): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(1235,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\VsCodeProjects\Note Organization Software\ProjectFiles\Note Organization Software.cpp(1546,6): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Note Organization Software.vcxproj -> D:\VsCodeProjects\Note Organization Software\ProjectFiles\x64\Debug\Note Organization Software.exe

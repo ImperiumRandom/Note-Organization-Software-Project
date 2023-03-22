@@ -17,7 +17,7 @@
 
 // Phuedo Code - in our file creation the last index of the vector will always be the last loaded file
 
-// ToDO:: 1. add file creation system
+// ToDO:: 1. find out why the file reading is splitting white spaces
        // 2. Remove debugging statments
 
 // note for testing areas
@@ -1312,7 +1312,7 @@ void chooseOrCreateSubCatagory(functionCall& choice, std::vector<SubCatagory>& s
 
 // main menu
 
-void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
+void menu(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, std::string currentFileName) {
 
 	int userInput;
 
@@ -1326,6 +1326,10 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 
 		NewLines(2);
 
+		std::cout << ":: Current File: " << currentFileName << " ::";
+
+		NewLines(2);
+
 		std::cout << ":: Please select one of the options below! ::";
 
 		NewLines(2);
@@ -1336,17 +1340,21 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 		
 		NewLines(1);
 
-		std::cout << "(1) View and Choose Sub Catagory";
+		std::cout << "(1) Create a New File Save";
 
 		NewLines(1);
 
-		std::cout << "(2) Exit Program";
+		std::cout << "(2) View and Choose Sub Catagory";
+
+		NewLines(1);
+
+		std::cout << "(3) Exit Program";
 
 		NewLines(2);
 
 		std::cout << "User Input: ";
 
-		if (selectAndValidateInt(userInput, 0, 2)) {
+		if (selectAndValidateInt(userInput, 0, 3)) {
 
 			break;
 
@@ -1374,13 +1382,19 @@ void menu(functionCall &choice, std::vector<SubCatagory>& subCatagoryStorage) {
 	
 	else if (userInput == 1) {
 
-		choice = ViewAndChooseSubCatagory;
+		choice = FileCreation;
 
 	}
 
 	// assigns exit Program
 
 	else if (userInput == 2) {
+
+		choice = ViewAndChooseSubCatagory;
+
+	}
+
+	else if (userInput == 3) {
 
 		choice = ExitProgram;
 
@@ -1396,7 +1410,7 @@ void writeFiles(std::vector<std::string> fileStorage, std::string currentFile) {
 
 	const std::string storeCurrentFile = "-L-\n";
 
-	std::ofstream myFile("FileSaveNames");
+	std::ofstream myFile("FileSaveNames.txt");
 
 	if (myFile.is_open()) {
 
@@ -1419,11 +1433,13 @@ void writeFiles(std::vector<std::string> fileStorage, std::string currentFile) {
 
 }
 
-void readAndStoreFileContentsIntoVector(std::vector<std::string>& fileStorage, std::string currentFile) {
+void readAndStoreFileContentsIntoVector(std::vector<std::string>& fileStorage, std::string &currentFile) {
 
 	const std::string storeCurrentFile = "-L-";
+	
+	// open then close file to make sure it exists, if it doesn't it will be created
 
-	std::ifstream myFile("FileSaveNames");
+	std::ifstream myFile("FileSaveNames.txt");
 
 	std::string holdFileContents;
 
@@ -1431,7 +1447,7 @@ void readAndStoreFileContentsIntoVector(std::vector<std::string>& fileStorage, s
 
 	if (myFile.is_open()) {
 
-		while (myFile >> holdFileContents) {
+		while (std::getline(myFile, holdFileContents)) {
 
 			// this if statement will check if we need to store last opened file
 
@@ -1476,8 +1492,10 @@ void fileCreation(functionCall& choice, std::vector<std::string> &fileStorage, s
 	std::string userSInput;
 
 	// user will create file for program
+
+	system("cls");
 	
-	std::cout << "|| Please Type in the Name of Your New File ||";
+	std::cout << ":: Please Type in the Name of Your New File ::";
 
 	NewLines(2);
 
@@ -1485,9 +1503,9 @@ void fileCreation(functionCall& choice, std::vector<std::string> &fileStorage, s
 
 	std::getline(std::cin, userSInput);
 
-	fileStorage.push_back(userSInput);
+	currentFile = userSInput + ".txt";
 
-	currentFile = userSInput;
+	fileStorage.push_back(currentFile);
 
 	writeFiles(fileStorage, currentFile);
 
@@ -1496,7 +1514,6 @@ void fileCreation(functionCall& choice, std::vector<std::string> &fileStorage, s
 	return;
 
 }
-
 
 void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, std::string& currentFile) {
 
@@ -1510,6 +1527,8 @@ void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, st
 
 	while (true) {
 
+		system("cls");
+
 		std::cout << "|| Please Select a File ||";
 
 		NewLines(2);
@@ -1521,6 +1540,8 @@ void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, st
 			NewLines(2);
 
 		}
+
+		std::cout << "User Input: ";
 
 		if (selectAndValidateInt(userInput, 1, fileStorage.size())) {
 
@@ -1552,6 +1573,16 @@ void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, st
 
 int main()
 {
+	// make sure notes file exists
+
+	std::ofstream myFile("FileSaveNames.txt", std::ios::app);
+
+	if (myFile.is_open()) {
+
+		myFile.close();
+
+	}
+
 	// variable/enum for selection input - access different areas of program
 
 	functionCall choice = MainMenu;
@@ -1575,6 +1606,8 @@ int main()
 	std::string currentFile; // this will always be written as the last loaded file until the user changes there file
 
 	readAndStoreFileContentsIntoVector(noteSaveFiles, currentFile);
+
+	std::cout << noteSaveFiles.size();
 
 	// read last opened file, or have user create one
 
@@ -1603,8 +1636,6 @@ int main()
 
 			subCatagoryStorage.clear();
 
-			read(currentFile, subCatagoryStorage);
-
 			break;
 
 		}
@@ -1625,7 +1656,7 @@ int main()
 
 		case MainMenu: {
 
-			menu(choice, subCatagoryStorage);
+			menu(choice, subCatagoryStorage, currentFile);
 
 			break;
 
@@ -1641,7 +1672,7 @@ int main()
 
 		case CreateSubcatagory: {
 
-			createSubCatagory("Notes.txt", choice, subCatagoryStorage, currentSubCatagoryIndex);
+			createSubCatagory(currentFile, choice, subCatagoryStorage, currentSubCatagoryIndex);
 
 			break;
 
@@ -1657,7 +1688,7 @@ int main()
 
 		case CreateNote: {
 
-			createNote("Notes.txt", choice, subCatagoryStorage, currentSubCatagoryIndex);
+			createNote(currentFile, choice, subCatagoryStorage, currentSubCatagoryIndex);
 
 			break;
 
@@ -1665,7 +1696,7 @@ int main()
 
 		case EditNote: {
 
-			editNote("Notes.txt", choice, subCatagoryStorage, currentSubCatagoryIndex, keyNameForNote);
+			editNote(currentFile, choice, subCatagoryStorage, currentSubCatagoryIndex, keyNameForNote);
 
 			break;
 
