@@ -10,6 +10,7 @@
 #include <numeric>
 #include <sstream>
 #include <iterator>
+#include <cstdio>
 
 
 // current debing 
@@ -53,7 +54,7 @@
 
 // global enum for selections
 
-enum functionCall {ViewAndChooseSubCatagory, ExitProgram, MainMenu, CreateSubcatagory, EditOrViewOrCreateNote, ViewNote, CreateNote, EditNote, FileSelection, FileCreation};
+enum functionCall {DeleteFile, ViewAndChooseSubCatagory, ExitProgram, MainMenu, CreateSubcatagory, EditOrViewOrCreateNote, ViewNote, CreateNote, EditNote, FileSelection, FileCreation};
 
 // return uppercase version of string
 
@@ -413,6 +414,8 @@ void write(std::string fileName, std::vector<SubCatagory>& subCatagories) {
 		}
 
 	}
+
+	myFile.close();
 
 	return;
 
@@ -1569,6 +1572,84 @@ void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, st
 	
 }
 
+void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std::string &currentFile) {
+
+	// variable for recieving input then input validating input
+
+	std::string userSInput;
+
+	int userInput = 0;
+
+	// displays current number for loop
+
+	while (true) {
+
+		system("cls");
+
+		std::cout << "|| Please Select a File to Delete||";
+
+		NewLines(2);
+
+		for (int i = 0; i < fileStorage.size(); i++) {
+
+			std::cout << i + 1 << ": " << fileStorage[i];
+
+			NewLines(2);
+
+		}
+
+		std::cout << "User Input: ";
+
+		if (selectAndValidateInt(userInput, 1, fileStorage.size())) {
+
+			if (fileStorage[userInput] == currentFile) {
+
+				std::cout << "Invalid Input, this file is currently loaded. Please unload the file, or select another file.";
+
+			}
+
+			else {
+
+				break;
+
+			}
+
+		}
+
+		else {
+
+			std::cout << "Invalid Input, press any key to try again.";
+
+			NewLines(2);
+
+			system("pause");
+
+		}
+
+	}
+
+	// test this next time
+
+	int numberOfCharacterForChar = 0;
+
+	char deleteFileChar;
+
+	for (int i = 0; i < fileStorage[userInput].size(); i++) {
+
+		deleteFileChar += fileStorage[userInput][i];
+
+	}
+
+	const char* ptc = &deleteFileChar;
+
+	remove(ptc);
+
+	choice = MainMenu;
+
+	return;
+
+}
+
 // main program function
 
 int main()
@@ -1628,6 +1709,14 @@ int main()
 	while (true) {
 		
 		switch (choice) {
+
+		case DeleteFile: {
+
+			deleteFile(choice, noteSaveFiles, currentFile);
+
+			break;
+
+		}
 
 
 		case FileCreation: {
