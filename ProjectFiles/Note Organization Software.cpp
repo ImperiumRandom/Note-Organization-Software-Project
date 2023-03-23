@@ -1339,19 +1339,23 @@ void menu(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, st
 
 		// Options
 
-		std::cout << "(0) Select and Load A Seperate FIle/Save";
+		std::cout << "(1) Select and Load A Seperate FIle/Save";
 		
 		NewLines(1);
 
-		std::cout << "(1) Create a New File Save";
+		std::cout << "(2) Create a New File Save";
 
 		NewLines(1);
 
-		std::cout << "(2) View and Choose Sub Catagory";
+		std::cout << "(3) Delete a File Save";
 
 		NewLines(1);
 
-		std::cout << "(3) Exit Program";
+		std::cout << "(4) View and Choose Sub Catagory";
+
+		NewLines(1);
+
+		std::cout << "(5) Exit Program";
 
 		NewLines(2);
 
@@ -1375,29 +1379,33 @@ void menu(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, st
 
 	}
 
-	// assigns viewAndChooseSubCatagory
-
-	if (userInput == 0) {
+	// assigns next function/location user will be sent based on above inputs
+	
+	if (userInput == 1) {
 
 		choice = FileSelection;
 
 	}
-	
-	else if (userInput == 1) {
+
+	else if (userInput == 2) {
 
 		choice = FileCreation;
 
 	}
 
-	// assigns exit Program
+	else if (userInput == 3) {
 
-	else if (userInput == 2) {
+		choice = DeleteFile;
+
+	}
+
+	else if (userInput == 4) {
 
 		choice = ViewAndChooseSubCatagory;
 
 	}
 
-	else if (userInput == 3) {
+	else if (userInput == 5) {
 
 		choice = ExitProgram;
 
@@ -1592,6 +1600,16 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 
 		for (int i = 0; i < fileStorage.size(); i++) {
 
+			if (fileStorage[i] == currentFile) {
+
+				std::cout << i + 1 << ": Current File: " << fileStorage[i];
+
+				NewLines(2);
+
+				continue;
+
+			}
+
 			std::cout << i + 1 << ": " << fileStorage[i];
 
 			NewLines(2);
@@ -1628,21 +1646,23 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 
 	}
 
-	// test this next time
+	int fileToDeleteLength = fileStorage[userInput].size();
 
-	int numberOfCharacterForChar = 0;
+	char* ptc = new char[fileToDeleteLength + 1];
 
-	char deleteFileChar;
+	strcpy(ptc, fileStorage[userInput].c_str());
 
-	for (int i = 0; i < fileStorage[userInput].size(); i++) {
+	// delete and reposition elements in vector - might be able to be done with iterator
 
-		deleteFileChar += fileStorage[userInput][i];
+	// write file to folder
 
-	}
-
-	const char* ptc = &deleteFileChar;
+	writeFiles(fileStorage, currentFile);
 
 	remove(ptc);
+	
+	delete ptc;
+
+	ptc = NULL;
 
 	choice = MainMenu;
 
