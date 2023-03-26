@@ -1417,6 +1417,32 @@ void menu(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, st
 
 // file selection
 
+void deleteAnElement(std::vector<std::string> &fileStorage, int indexToDelete) {
+
+	std::vector<std::string> oldFileStorage(fileStorage);
+	
+	fileStorage.clear();
+
+	for (int i = 0; i < oldFileStorage.size(); i++) {
+	
+		if (oldFileStorage[i] == oldFileStorage[indexToDelete]) {
+
+			continue;
+
+		}
+
+		else {
+
+			fileStorage.push_back(oldFileStorage[i]);
+
+		}
+
+	}
+
+	return;
+
+}
+
 void writeFiles(std::vector<std::string> fileStorage, std::string currentFile) {
 
 	const std::string storeCurrentFile = "-L-\n";
@@ -1619,10 +1645,14 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 		std::cout << "User Input: ";
 
 		if (selectAndValidateInt(userInput, 1, fileStorage.size())) {
-
+			
+			userInput--; // allows userInput variable to access element in vector
+			
 			if (fileStorage[userInput] == currentFile) {
 
 				std::cout << "Invalid Input, this file is currently loaded. Please unload the file, or select another file.";
+
+				system("pause");
 
 			}
 
@@ -1648,21 +1678,25 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 
 	int fileToDeleteLength = fileStorage[userInput].size();
 
-	char* ptc = new char[fileToDeleteLength + 1];
+	const char* ptc = new char[fileToDeleteLength + 1];
 
-	strcpy(ptc, fileStorage[userInput].c_str());
+	ptc = fileStorage[userInput].c_str();
 
-	// delete and reposition elements in vector - might be able to be done with iterator
-
-	// write file to folder
+	deleteAnElement(fileStorage, userInput);
 
 	writeFiles(fileStorage, currentFile);
 
+	std::cout << *ptc;
+
+	system("pause");
+
 	remove(ptc);
 	
-	delete ptc;
+	system("pause");
 
-	ptc = NULL;
+	// something up below when deleting file pointer
+
+	delete ptc;
 
 	choice = MainMenu;
 

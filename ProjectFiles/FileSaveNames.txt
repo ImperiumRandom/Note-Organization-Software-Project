@@ -1,10 +1,5 @@
 SalvadorsNewFile.txt
-Hi there this is a new file lol.txt
-Hi their another file lol.txt
-This is another file for storing notes hehehe..txt
-unce.txt
-This is another new file.txt
-hi.txt
-s.txt
+Hi their.txt
+ugh.txt
 -L-
-Hi there this is a new file lol.txt
+SalvadorsNewFile.txt
