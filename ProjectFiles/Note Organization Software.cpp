@@ -28,7 +28,6 @@
 
 		
 		
-		
 // code setup: 
 
 // store name (-N-) go to next line to get information
@@ -46,8 +45,6 @@
 // create function to add onto current file
 
 // create function to read entire file on program start
-
-
 
 
 
@@ -262,16 +259,10 @@ void InsertCharactersIntoVector(std::string newString, std::vector<std::string>&
 }
 
 void parseStringForKeyValuePairs(std::string stringToParse, char symbolToFind, int& key, std::string& value) {
-	
-	// parse string and set key and value
-
-	std::cout << stringToParse;
 
 	// define bool to see if key has been already stored
 
 	bool hasKeyBeenStored = false;
-
-	system("pause");
 
 	std::stringstream parse(stringToParse);
 
@@ -314,8 +305,6 @@ void parseStringForKeyValuePairs(std::string stringToParse, char symbolToFind, i
 		}
 
 	}
-
-	system("pause");
 
 }
 
@@ -1361,7 +1350,7 @@ void menu(functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, st
 
 		std::cout << "User Input: ";
 
-		if (selectAndValidateInt(userInput, 0, 3)) {
+		if (selectAndValidateInt(userInput, 0, 5)) {
 
 			break;
 
@@ -1566,7 +1555,7 @@ void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, st
 
 		system("cls");
 
-		std::cout << "|| Please Select a File ||";
+		std::cout << "|| Please Select a File, Enter 0 to Return to Main Menu ||";
 
 		NewLines(2);
 
@@ -1580,8 +1569,19 @@ void fileSelection(functionCall& choice,std::vector<std::string>&fileStorage, st
 
 		std::cout << "User Input: ";
 
-		if (selectAndValidateInt(userInput, 1, fileStorage.size())) {
+		if (selectAndValidateInt(userInput, 0, fileStorage.size())) {
 
+			// returns to main menu if user entered 0
+
+			if (userInput == 0) {
+
+				choice = MainMenu;
+
+				return;
+
+			}
+			
+			
 			break;
 
 		}
@@ -1620,7 +1620,7 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 
 		system("cls");
 
-		std::cout << "|| Please Select a File to Delete||";
+		std::cout << "|| Please Select a File to Delete, Enter 0 to Return to Main Menu ||";
 
 		NewLines(2);
 
@@ -1644,7 +1644,17 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 
 		std::cout << "User Input: ";
 
-		if (selectAndValidateInt(userInput, 1, fileStorage.size())) {
+		if (selectAndValidateInt(userInput, 0, fileStorage.size())) {
+			
+			// returns to main menu if user entered 0
+			
+			if (userInput == 0) {
+
+				choice = MainMenu;
+
+				return;
+
+			}
 			
 			userInput--; // allows userInput variable to access element in vector
 			
@@ -1676,11 +1686,11 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 
 	}
 
+	// all below code deletes selected file
+
 	int fileToDeleteLength = fileStorage[userInput].size();
 
-	const char* ptc = new char[fileToDeleteLength + 1];
-
-	ptc = fileStorage[userInput].c_str();
+	const char* ptc = fileStorage[userInput].c_str();
 
 	deleteAnElement(fileStorage, userInput);
 
@@ -1688,15 +1698,9 @@ void deleteFile(functionCall& choice, std::vector<std::string> &fileStorage, std
 
 	std::cout << *ptc;
 
-	system("pause");
-
 	remove(ptc);
-	
-	system("pause");
 
-	// something up below when deleting file pointer
-
-	delete ptc;
+	ptc = NULL;
 
 	choice = MainMenu;
 
@@ -1741,8 +1745,6 @@ int main()
 	std::string currentFile; // this will always be written as the last loaded file until the user changes there file
 
 	readAndStoreFileContentsIntoVector(noteSaveFiles, currentFile);
-
-	std::cout << noteSaveFiles.size();
 
 	// read last opened file, or have user create one
 
