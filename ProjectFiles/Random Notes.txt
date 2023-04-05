@@ -4,4 +4,13 @@ hi
 1,this is a test note
 -S-
 this is a note
+-K-
+2,New note for testing
+-S-
+None
+hi their
+this is a new note lawl
+I am entering lines and they are cool
+hehehe
+woah
 -V-

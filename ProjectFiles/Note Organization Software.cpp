@@ -875,7 +875,7 @@ void createNote(std::string fileName, functionCall& choice, std::vector<SubCatag
 
 				}
 
-				subCatagoryStorage[currentSubCatagoryIndex].Notes[newPlaceInNames].push_back(userSInput);
+				subCatagoryStorage[currentSubCatagoryIndex].Notes[KeyForNote].push_back(userSInput);
 
 			}
 
@@ -907,25 +907,9 @@ void viewNote(functionCall& choice, std::vector<std::string>Note) {
 
 	std::string currentPlace;
 
-	int counter = 0;
-
 	for (std::vector<std::string>::iterator it = Note.begin(); it != Note.end(); it ++) {
 
-		if (counter == 3) {
-
-			std::cout << *it + "\n";
-
-			counter = 0;
-
-		}
-
-		else {
-
-			std::cout << *it;
-
-			counter++;
-
-		}
+		std::cout << *it << "\n";
 
 	}
 
