@@ -1,0 +1,13 @@
+-N-
+Buy Food
+-K-
+1,Shopping List
+-S-
+Pizza, Burgers, Fren
+ch Fries, Steak, May
+onaise, Avocado, Oni
+ons, Tomato, Burger 
+King, Mc-Donalds, We
+ndys, Carls JR., Ste
+ak & Shake.
+-V-

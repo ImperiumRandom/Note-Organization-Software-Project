@@ -224,6 +224,22 @@ void extractCertainAmountOfCharactersIntoVector(std::string stringToExtract, std
 
 }
 
+bool checkStringForEndInput(std::string codeWordToEndInput, std::string &userSInput) {
+
+	if (stringUpper(userSInput) == "/END") {
+
+		return true;
+
+	}
+
+	else {
+
+		return false;
+
+	}
+
+}
+
 void InsertCharactersIntoVector(std::string newString, std::vector<std::string>& note, int placeForInsertion) {
 
 	std::vector<std::string>newElements;
@@ -598,6 +614,14 @@ void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, 
 
 void editNote(std::string fileName, functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int &currentSubCatagoryIndex, std::string &keyNameForNote) {
 
+	// once first cycle happens text will display please continue entering note
+	
+	bool firstNoteInputCycleHasHappened = false;
+	
+	// this string will end input sequence below 
+
+	std::string endInput = "/END";
+	
 	// user string input	
 
 	std::string userSInput;
@@ -638,19 +662,31 @@ void editNote(std::string fileName, functionCall& choice, std::vector<SubCatagor
 
 	if (userInput == 1) {
 
+		subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote].clear();
+
+		while (true) {
+
+			system("cls");
+
+			std::cout << ":: Please enter note - enter (/end) on one line to finish entering note ::";
+
+			NewLines(2);
+
+			std::cout << "User Input: ";
+
+			std::getline(std::cin, userSInput);
+
+			if (checkStringForEndInput(endInput, userSInput)) {
+
+				break;
+
+			}
+
+			subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote].push_back(userSInput);
+
+		}
+
 		system("cls");
-
-		std::cout << ":: Please enter note: ::";
-
-		NewLines(2);
-
-		std::cout << "User Input: ";
-
-		std::getline(std::cin,userSInput);
-
-		extractCertainAmountOfCharactersIntoVector(userSInput, subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote]);
-
-		NewLines(2);
 
 		std::cout << ":: New Note has been Entered, Please press any key to continue. ::";
 
@@ -745,6 +781,12 @@ void editNote(std::string fileName, functionCall& choice, std::vector<SubCatagor
 
 void createNote(std::string fileName, functionCall& choice, std::vector<SubCatagory>& subCatagoryStorage, int &currentSubCatagoryIndex) {
 
+	// this string will end input sequence below 
+
+	std::string endInput = "/END";
+
+	// int for user to select next destination
+
 	int userInput;
 
 	while (true) {
@@ -815,13 +857,27 @@ void createNote(std::string fileName, functionCall& choice, std::vector<SubCatag
 
 			system("cls");
 
-			std::cout << "Please Enter Your New Note: ";
+			while (true) {
 
-			NewLines(2);
+				system("cls");
 
-			std::getline(std::cin, userSInput);
+				std::cout << ":: Please enter note - enter (/end) on one line to finish entering note ::";
 
-			extractCertainAmountOfCharactersIntoVector(userSInput, subCatagoryStorage[currentSubCatagoryIndex].Notes[KeyForNote]);
+				NewLines(2);
+
+				std::cout << "User Input: ";
+
+				std::getline(std::cin, userSInput);
+
+				if (checkStringForEndInput(endInput, userSInput)) {
+
+					break;
+
+				}
+
+				subCatagoryStorage[currentSubCatagoryIndex].Notes[newPlaceInNames].push_back(userSInput);
+
+			}
 
 			choice = EditOrViewOrCreateNote;
 
