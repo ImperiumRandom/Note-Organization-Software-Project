@@ -18,20 +18,16 @@
 
 // Phuedo Code - in our file creation the last index of the vector will always be the last loaded file
 
-// ToDO:: 1. find out why the file reading is splitting white spaces
-       // 2. Remove debugging statments
+// ToDO:: 1. clearn up code a bit, and add some multifile compilation
 
-// note for testing areas
+// below is a quick copy and past code setup for debugging areas
 		//std::cout << "worked";
 		//system("pause");
-
-
 		
 		
-// code setup: 
+// In parenthesis are the string constants I used for storing info into files, then parsing it into the program.
 
 // store name (-N-) go to next line to get information
-
 
 // repeat note storage until all notes have been stored
 
@@ -40,11 +36,6 @@
 // store what note says (-S-) go to next line to store elements into note vector
 
 // store last loaded file in file for file names (-L-)
-
-
-// create function to add onto current file
-
-// create function to read entire file on program start
 
 
 
@@ -610,6 +601,20 @@ void displayNoteNamesInSubCatagory(std::vector<SubCatagory>&subCatagoryStorage, 
 
 }
 
+// view note
+
+void viewNote(functionCall& choice, std::vector<std::string>Note) {
+
+	std::string currentPlace;
+
+	for (std::vector<std::string>::iterator it = Note.begin(); it != Note.end(); it ++) {
+
+		std::cout << *it << "\n";
+
+	}
+
+}
+
 // edit note
 
 void editNote(std::string fileName, functionCall& choice, std::vector<SubCatagory>&subCatagoryStorage, int &currentSubCatagoryIndex, std::string &keyNameForNote) {
@@ -669,6 +674,18 @@ void editNote(std::string fileName, functionCall& choice, std::vector<SubCatagor
 			system("cls");
 
 			std::cout << ":: Please enter note - enter (/end) on one line to finish entering note ::";
+
+			NewLines(2);
+
+			std::cout << "------------------------------";
+
+			NewLines(2);
+
+			viewNote(choice, subCatagoryStorage[currentSubCatagoryIndex].Notes[keyNameForNote]);
+
+			NewLines(1);
+
+			std::cout << "------------------------------";
 
 			NewLines(2);
 
@@ -803,6 +820,8 @@ void createNote(std::string fileName, functionCall& choice, std::vector<SubCatag
 
 		NewLines(2);
 
+		std::cout << "User Input: ";
+
 		std::getline(std::cin, userSInput);
 
 		subCatagoryStorage[currentSubCatagoryIndex].Names[newPlaceInNames] = userSInput;
@@ -855,6 +874,8 @@ void createNote(std::string fileName, functionCall& choice, std::vector<SubCatag
 		
 		if (userInput == 1) {
 
+			subCatagoryStorage[currentSubCatagoryIndex].Notes[KeyForNote].clear();
+
 			system("cls");
 
 			while (true) {
@@ -862,6 +883,18 @@ void createNote(std::string fileName, functionCall& choice, std::vector<SubCatag
 				system("cls");
 
 				std::cout << ":: Please enter note - enter (/end) on one line to finish entering note ::";
+
+				NewLines(2);
+
+				std::cout << "------------------------------";
+
+				NewLines(2);
+
+				viewNote(choice, subCatagoryStorage[currentSubCatagoryIndex].Notes[KeyForNote]);
+
+				NewLines(1);
+
+				std::cout << "------------------------------";
 
 				NewLines(2);
 
@@ -896,20 +929,6 @@ void createNote(std::string fileName, functionCall& choice, std::vector<SubCatag
 			return;
 
 		}
-
-	}
-
-}
-
-// view note
-
-void viewNote(functionCall& choice, std::vector<std::string>Note) {
-
-	std::string currentPlace;
-
-	for (std::vector<std::string>::iterator it = Note.begin(); it != Note.end(); it ++) {
-
-		std::cout << *it << "\n";
 
 	}
 
@@ -1114,7 +1133,7 @@ void editOrViewOrCreateNotes(functionCall& choice, std::vector<SubCatagory>&subC
 				
 				viewNote(choice, subCatagoryStorage[currentSubCatagoryIndex].Notes[noteKey]);
 
-				NewLines(2);
+				NewLines(1);
 				
 				std::cout << "------------------------------";
 
