@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Main Program Functions">
+      <UniqueIdentifier>{28bbf648-6c3e-47a8-a265-fc7918844c5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Program Functions\Header Files">
+      <UniqueIdentifier>{96092bfc-658e-488d-959f-735e461e5f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Program Functions\Source Files">
+      <UniqueIdentifier>{795391ee-4ace-4b4f-9f8c-bd9a50a9efec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Note Organization Software.cpp">
@@ -21,13 +30,16 @@
     <ClCompile Include="SubCatagory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Test Debug Solutions.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MainProgramFunctions.cpp">
+      <Filter>Main Program Functions\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SubCatagory.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProgramFunctions.h">
+      <Filter>Main Program Functions\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

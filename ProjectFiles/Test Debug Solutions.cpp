@@ -22,14 +22,14 @@
 
 
 
+
 int master() {
 
-	
+	std::cout << "hi";
+
+	system("pause");
 	
 	return 0;
-
-
-
 
 
 }

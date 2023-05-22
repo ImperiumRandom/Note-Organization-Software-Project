@@ -128,10 +128,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Note Organization Software.cpp" />
-    <ClCompile Include="Test Debug Solutions.cpp" />
+    <ClCompile Include="MainProgramFunctions.cpp" />
     <ClCompile Include="SubCatagory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MainProgramFunctions.h" />
     <ClInclude Include="SubCatagory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
