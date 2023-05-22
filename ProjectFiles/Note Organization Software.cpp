@@ -1,6 +1,6 @@
 // Note Organization Software.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include "Main Program Functions.h"
+#include "MainProgramFunctions.h"
 
 
 
@@ -39,18 +39,16 @@
 // store last loaded file in file for file names (-L-)
 
 
+// assigns enum when user chooses location to go in console
 
-
-
-
-
-
+enum functionCall { DeleteFile, ViewAndChooseSubCatagory, ExitProgram, MainMenu, CreateSubcatagory, EditOrViewOrCreateNote, ViewNote, CreateNote, EditNote, FileSelection, FileCreation };
 
 
 // main program function
 
 int main()
 {
+
 	// make sure notes file exists
 
 	std::ofstream myFile("FileSaveNames.txt", std::ios::app);

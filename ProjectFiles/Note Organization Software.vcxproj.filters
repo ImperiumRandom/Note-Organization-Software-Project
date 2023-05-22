@@ -30,10 +30,7 @@
     <ClCompile Include="SubCatagory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Test Debug Solutions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Main Program Functions.cpp">
+    <ClCompile Include="MainProgramFunctions.cpp">
       <Filter>Main Program Functions\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,7 +38,7 @@
     <ClInclude Include="SubCatagory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Main Program Functions.h">
+    <ClInclude Include="MainProgramFunctions.h">
       <Filter>Main Program Functions\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
